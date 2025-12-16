@@ -29,11 +29,11 @@ def bezier_curve(P0, P1, P2, P3, num_points=250):
 # ==========================================================
 def generate_cutline(
     img_path,
-    x_center_ratio=(0.45, 0.55),
+    x_center_ratio=(0.30, 0.55),
     x_jitter=2,
-    ticket_y_ratio=(0.49, 0.89),
+    ticket_y_ratio=(0.10, 0.89),
     dash_length=13,
-    thickness=7,
+    thickness=20,
     segment_ratio=1.3
 ):
     """
@@ -128,11 +128,14 @@ def generate_cutline(
 # 3) 실행부 (원하면 주석 처리하면 됨)
 # ==========================================================
 if __name__ == "__main__":
-    img, meta = generate_cutline("ticket.png")
+    img, meta = generate_cutline("tcurity_ticket.png")
+
+    # ✅ JSON 파일 저장
+    with open("cutline_meta.json", "w", encoding="utf-8") as f:
+        json.dump(meta, f, indent=4, ensure_ascii=False)
 
     print("=== 절취선 생성 완료 ===")
-    print("메타데이터:")
-    print(json.dumps(meta, indent=4))
+    print("JSON 저장 완료: cutline_meta.json")
 
     # 시각적 확인 (저장은 아님)
     import matplotlib.pyplot as plt
@@ -140,3 +143,4 @@ if __name__ == "__main__":
     plt.title("Generated Cutline (Preview Only)")
     plt.axis("off")
     plt.show()
+
